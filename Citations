@@ -1,0 +1,12 @@
+Citations:
+
+Tweepy:
+http://docs.tweepy.org/en/latest/streaming_how_to.html
+
+Tweeter Object:
+https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/tweet-object
+https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/intro-to-tweet-json
+
+
+Firehose:
+https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/firehose.html#Firehose.Client.start_delivery_stream_encryption
