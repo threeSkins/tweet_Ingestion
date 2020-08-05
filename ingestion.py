@@ -34,11 +34,19 @@ class MyStreamListener(StreamListener):
         print("Connected to the streaming server.")
 
     def on_status(self, status):
+        json_str = json.dumps(status._json)
         print('Tweet text: ' + status.text)
+        """
+         data = {'text': status.text,
+                'time': status.created_at,
+                'user': status.user.name,
+                'id': status.user.id_str}
+        print(data)
+        """
         try:
             response = client.put_record(
                 DeliveryStreamName=stream_name,
-                Record={'Data': status.text})
+                Record={'Data': json_str + "\n"})
             print(response)
             print("Uploaded to firehose\n")
         except ClientError as e:
@@ -46,6 +54,7 @@ class MyStreamListener(StreamListener):
         return True
 
     def on_error(self, status):
+        print("error")
         print(status)
         return False
 
@@ -84,8 +93,8 @@ if __name__ == '__main__':
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = API(auth)
-    #myStream = Stream(auth = api.auth, listener=myStreamListener)
-    #myStream.filter(track=['#AWS','#glue','#sagemaker','#lambda','#EC2','#DynamoDB','#Comprehend','#Kinesis','#Athena', '#Redshift' ], is_async=True)
+    myStream = Stream(auth = api.auth, listener=myStreamListener)
+    myStream.filter(languages=["en"],track=['#AWS','#glue','#sagemaker','#lambda','#EC2','#DynamoDB','#Comprehend','#Kinesis','#Athena', '#Redshift' ], is_async=True)
 
-    Stream2 = Stream(auth = api.auth, listener=StreamListenerFollow())
-    Stream2.filter(follow=['1275460974594723841'],is_async=True)
+    #Stream2 = Stream(auth = api.auth, listener=StreamListenerFollow())
+    #Stream2.filter(follow=['1275460974594723841'],is_async=True)
