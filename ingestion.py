@@ -21,7 +21,7 @@ consumer_secret = config['twitter']['consumer_secret']
 
 #firehose initiate
 stream_name = 'tweet-stream'
-os.environ['AWS_PROFILE'] = "personal_admin"
+os.environ['AWS_PROFILE'] = "default"
 client = boto3.client('firehose', region_name='us-east-1')
 
 #SNS initiate 
